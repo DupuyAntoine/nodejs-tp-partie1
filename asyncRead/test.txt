@@ -1,0 +1,5 @@
+Bonjour,
+
+Je suis le texte de test de la fonction readFile de la classe fs.
+
+Voilà merci.
