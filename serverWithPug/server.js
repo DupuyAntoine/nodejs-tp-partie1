@@ -4,18 +4,19 @@ const port = 3000;
 
 const server = http.createServer(
     (req, res) => {
-        console.log(req.url)
-        fs.readFile('.\/' + req.url, 'utf-8', async (err, data)=> {
-            if (err) {
-                console.error(err);
-                return
-            }
+        if (req.url !== '/favicon.ico' || req.url !== '/') {
+            fs.readFile('.' + req.url, 'utf-8', async (err, data)=> {
+                if (err) {
+                    console.error(err);
+                    return
+                }
 
-            const content = createHtmlContent(data)
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/html');
-            res.end(content);    
-        });
+                const content = createHtmlContent(data)
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/html');
+                res.end(content);    
+            });
+        }
     }
 );
 
@@ -27,6 +28,9 @@ const createHtmlContent = (data) => {
     content += '</thead>';
     content += '<tbody>';
     for (let line of lines) {
+        if (line.length !== 2) {
+            content += ''
+        }
         elts = line.split(';');
         content += `<tr><td>${elts[0]}</td><td>${elts[1]}</td></tr>`;
     }
