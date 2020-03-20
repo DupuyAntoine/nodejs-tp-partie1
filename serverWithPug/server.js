@@ -33,12 +33,13 @@ const createHtmlContent = (data) => {
     for (let line of lines) {
         if (line.length !== 2) {
             content += ''
+        } else {
+            elts = line.split(';');
+            content += compileLine({
+                id: elts[0],
+                city: elts[1]
+            });
         }
-        elts = line.split(';');
-        content += compileLine({
-            id: elts[0],
-            city: elts[1]
-        });
     }
     content += '</tbody>';
     content += '<style type="text/css">';
