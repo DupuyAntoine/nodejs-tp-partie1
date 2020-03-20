@@ -1,6 +1,9 @@
 const http = require('http');
 const fs = require('fs');
+const pug = require('pug');
 const port = 3000;
+
+const compileLine = pug.compileFile('template.pug')
 
 const server = http.createServer(
     (req, res) => {
@@ -32,7 +35,10 @@ const createHtmlContent = (data) => {
             content += ''
         }
         elts = line.split(';');
-        content += `<tr><td>${elts[0]}</td><td>${elts[1]}</td></tr>`;
+        content += compileLine({
+            id: elts[0],
+            city: elts[1]
+        });
     }
     content += '</tbody>';
     content += '<style type="text/css">';
