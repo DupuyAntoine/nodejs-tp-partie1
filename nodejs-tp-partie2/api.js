@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const fs = require('fs')
+const pug = require('pug')
 const {v4: uuidv4} = require('uuid')
 
 const app = express()
@@ -29,7 +30,26 @@ app.get('/cities', (req, res) => {
             if (err) {
                 res.sendStatus(404)
             } else {
-                res.send(data)
+                const compileLine = pug.compileFile('./views/row.pug')
+                const object = JSON.parse(data)
+                let content = '<table>'
+                content += '<thead>';
+                content += '<tr><th>Identifiant</th><th>Ville</th></tr>';
+                content += '</thead>';
+                content += '<tbody>';            
+                for (let city of object.cities) {
+                    content += compileLine({
+                        id: city.id,
+                        city: city.name
+                    });         
+                }
+                content += '</tbody>';
+                content += '<style type="text/css">';
+                content += 'table { border: 1px solid #ddd; width: 100%; }';
+                content += 'th { background-color: cyan; }';
+                content += '</style>';            
+                content += '</table>'
+                res.send(content)
             }
         })
     }
