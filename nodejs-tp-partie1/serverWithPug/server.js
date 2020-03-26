@@ -13,7 +13,6 @@ const server = http.createServer(
                     console.error(err);
                     return
                 }
-
                 const content = createHtmlContent(data)
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'text/html');
@@ -31,14 +30,17 @@ const createHtmlContent = (data) => {
     content += '</thead>';
     content += '<tbody>';
     for (let line of lines) {
-        if (line.length !== 2) {
+        elts = line.split(';');
+        elts.pop();
+        if (elts.length !== 2) {
             content += ''
         } else {
-            elts = line.split(';');
+            console.log('je passe ici')
             content += compileLine({
                 id: elts[0],
                 city: elts[1]
             });
+            // console.log(content)
         }
     }
     content += '</tbody>';
