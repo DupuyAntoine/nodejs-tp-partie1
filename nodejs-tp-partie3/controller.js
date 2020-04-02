@@ -49,7 +49,7 @@ exports.get = (req, res, next) => {
         const compileLine = pug.compileFile('./views/row.pug')
         let content = '<table>'
         content += '<thead>';
-        content += '<tr><th>Identifiant</th><th>Ville</th><th>Modifier</th><th>Supprimer</th></tr>';
+        content += '<tr><th>Identifiant</th><th>Ville</th><th>Supprimer</th></tr>';
         content += '</thead>';
         content += '<tbody>';            
         for (let city of cities) {

@@ -27,21 +27,16 @@ app.use(jsonParser)
 app.use(urlEncoded)
 
 router.use( function( req, res, next ) {
-    // this middleware will call for each requested
-    // and we checked for the requested query properties
-    // if _method was existed
-    // then we know, clients need to call DELETE request instead
     if ( req.query._method == 'DELETE' ) {
-        // change the original METHOD
-        // into DELETE method
         req.method = 'DELETE';
-        // and set requested url to /user/12
         req.url = req.path;
     }
     if (req.query._method == 'PUT') {
+        console.log(req.query)
         req.method = 'PUT'
+        req.body = req.query.city
         req.url = req.path
-    }      
+    }
     next(); 
 });
 

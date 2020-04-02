@@ -1,7 +1,6 @@
 tr
     td #{id}
-    td #{city}
+    td 
+        input(type="text" name="name" value=city id=id)
     td
-        a(data-method="put" href="/city/" + id + "?_method=PUT") Modifier
-    td
-        a(data-method="delete" href="/city/" + id + "?_method=DELETE") Supprimer
+        a(href="/city/" + id + "?_method=DELETE") Supprimer
