@@ -1,3 +1,7 @@
 tr
     td #{id}
     td #{city}
+    td
+        a(data-method="put" href="/city/" + id + "?_method=PUT") Modifier
+    td
+        a(data-method="delete" href="/city/" + id + "?_method=DELETE") Supprimer
