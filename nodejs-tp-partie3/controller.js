@@ -2,22 +2,41 @@ const {v4: uuidv4} = require('uuid')
 const pug = require('pug')
 const City = require('./city.dao')
 
+const entryExists = (cities, city) => {
+    for (let c of cities) {
+        if (city.name === c.name) {
+            return true
+        }
+    }
+    return false
+}
+
 exports.create = (req, res, next) => {
     const city = {
         id: uuidv4(),
         name: req.body.name,
     }
 
-    City.create(city, (err, city) => {
+    City.get({}, (err, cities) => {
         if (err) {
             res.json({
                 error: err
             })
         }
-        res.json({
-            message: city.name + ' created successfully'
-        })
+        if (entryExists(cities, city)) {
+            res.json({ error: 'City already exists' })
+        } else {
+            City.create(city, (err, city) => {
+                if (err) {
+                    res.json({
+                        error: err
+                    })
+                }
+                res.redirect('/cities')
+            })        
+        }
     })
+
 }
 
 exports.get = (req, res, next) => {
@@ -60,10 +79,9 @@ exports.update = (req, res, next) => {
                 error: err
             })
         }
-        res.json({
-            message: city.name + ' updated successfully'
-        })
+        res.redirect('/cities')
     })
+
 }
 
 exports.delete = (req, res, next) => {
@@ -73,8 +91,6 @@ exports.delete = (req, res, next) => {
                 error: err
             })
         }
-        res.json({
-            message: city.name + ' deleted successfully'
-        })
+        res.redirect('/cities')
     })
 }
