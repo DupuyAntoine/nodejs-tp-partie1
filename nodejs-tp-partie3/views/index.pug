@@ -1,0 +1,9 @@
+html
+    head
+        title= title
+    body
+        h1=title
+        form(action='/city' method='POST')
+            label(for='name') Nom de la ville:
+            input(type='text', name='name', id='name')
+            input(type='submit')
